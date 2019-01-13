@@ -102,7 +102,7 @@ def plot_tags(tag_list):
         ax.set(xlabel='data', ylabel='popularność')
 
     ax.legend()
-    plt.show()
+    fig.savefig('plot.png')
 
 
 if __name__ == '__main__':

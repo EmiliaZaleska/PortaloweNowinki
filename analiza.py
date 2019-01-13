@@ -50,6 +50,23 @@ def get_new_tags(portal):
     return new_tags
 
 
+def get_popular_tags():
+    # TODO do not parse every time
+    data_dict = parse_csv()
+    popular_tags = []
+    for name in data_dict:
+        appeared_in_portals = set()
+        dates = data_dict[name]
+        for date_ in dates:
+            portals = dates[date_]
+            for portal in portals:
+                if dates[date_][portal] > 0:
+                    appeared_in_portals.add(portal)
+        if len(appeared_in_portals) >= 3:
+            popular_tags.append(name)
+    return popular_tags
+
+
 if __name__ == '__main__':
     from pprint import pprint
-    pprint(get_new_tags('pudelek'))
+    pprint(get_popular_tags())

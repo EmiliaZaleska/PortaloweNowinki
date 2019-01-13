@@ -26,6 +26,7 @@ def parse_csv():
         for row in datareader:
             if datareader.line_num != 1:
                 current_date, name, portal = row
+                current_date = date.fromisoformat(current_date)
                 if data_dict.get(name) is None:
                     data_dict[name] = {}
                 if data_dict[name].get(current_date) is None:
@@ -44,8 +45,8 @@ def get_new_tags(portal):
     new_tags = []
     for name in data_dict:
         dates = data_dict[name]
-        dates_appeared = [date_ for date_ in dates if dates[date_].get(portal) > 0]
-        if dates_appeared == [today.isoformat()]:
+        dates_appeared = [date_ for date_ in dates.keys() if dates[date_].get(portal)]
+        if dates_appeared == [today]:
             new_tags.append(name)
     return new_tags
 

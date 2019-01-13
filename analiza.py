@@ -1,5 +1,6 @@
-from datetime import date
+from datetime import date, timedelta
 import csv
+import matplotlib.pyplot as plt
 
 sample = {
     "Robert Lewandowski":
@@ -68,6 +69,35 @@ def get_popular_tags():
     return popular_tags
 
 
+def plot_tags(tag_list):
+    # TODO do not parse every time
+    data_dict = parse_csv()
+    dates = []
+    for tag in tag_list:
+        dates.extend(data_dict[tag].keys())
+    first_date = min(dates)
+    last_date = max(dates)
+    days = (last_date - first_date).days
+    x = [first_date + timedelta(days=days_to_add) for days_to_add in range(days + 1)]
+    fig, ax = plt.subplots()
+    for tag in tag_list:
+        y = []
+        for date_ in x:
+            appearances = data_dict[tag].get(date_)
+            if appearances is None:
+                y.append(0)
+            else:
+                y.append(sum(appearances.values()))
+
+        ax.plot(x, y, label=tag)
+        ax.set(xlabel='data', ylabel='popularność')
+
+    ax.legend()
+    plt.show()
+
+
 if __name__ == '__main__':
     from pprint import pprint
     pprint(get_popular_tags())
+    pprint(get_new_tags('pudelek'))
+    plot_tags(['Dżoana Krupa', 'Anna Lewandowska', 'Robert Lewandowski'])

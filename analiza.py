@@ -75,6 +75,18 @@ def get_popular_tags():
     return popular_tags
 
 
+def get_first_appearance(tag):
+    """
+    Finds first appearance of given tag and returns tuple with date and set of
+    portals on which it appeared first.
+    """
+    # TODO do not parse every time
+    data_dict = parse_csv('example_data.csv')
+    dates = data_dict[tag]
+    first_appeared_date = min(dates.keys())
+    return first_appeared_date, set(dates[first_appeared_date].keys())
+
+
 def plot_tags(tag_list):
     """
     Draws plots for Tags with the frequency of their appearances
@@ -109,4 +121,5 @@ if __name__ == '__main__':
     from pprint import pprint
     pprint(get_popular_tags())
     pprint(get_new_tags('pudelek'))
+    pprint(get_first_appearance('Anna Lewandowska'))
     plot_tags(['Dżoana Krupa', 'Anna Lewandowska', 'Robert Lewandowski'])

@@ -40,6 +40,9 @@ def parse_csv(filename):
 
 
 def get_new_tags(portal):
+    """
+    Returns list of tags that are new today
+    """
     # TODO do not parse every time
     today = date.today()
     data_dict = parse_csv('example_data.csv')
@@ -53,6 +56,9 @@ def get_new_tags(portal):
 
 
 def get_popular_tags():
+    """
+    Returns list of tags that appeared in at least 3 portals (takes all the data into account)
+    """
     # TODO do not parse every time
     data_dict = parse_csv('example_data.csv')
     popular_tags = []
@@ -70,6 +76,9 @@ def get_popular_tags():
 
 
 def plot_tags(tag_list):
+    """
+    Draws plots for Tags with the frequency of their appearances
+    """
     # TODO do not parse every time
     data_dict = parse_csv('example_data.csv')
     dates = []

@@ -2,27 +2,27 @@ from datetime import date, timedelta
 import csv
 import matplotlib.pyplot as plt
 
-sample = {
-    "Robert Lewandowski":
-        {
-            date.fromisoformat('2019-01-12'):
-                {
-                    "pudelek": 1
-                },
-            date.fromisoformat('2019-01-05'):
-                {
-                    "plotek": 2
-                },
-        }
-}
+# sample = {
+#     "Robert Lewandowski":
+#         {
+#             date.fromisoformat('2019-01-12'):
+#                 {
+#                     "pudelek": 1
+#                 },
+#             date.fromisoformat('2019-01-05'):
+#                 {
+#                     "plotek": 2
+#                 },
+#         }
+# }
 
 
-def parse_csv():
+def parse_csv(filename):
     """
     Read CSV file and return dict with more useful data format
     """
     data_dict = {}
-    with open('example_data.csv') as csv_file:
+    with open(filename) as csv_file:
         datareader = csv.reader(csv_file)
         for row in datareader:
             if datareader.line_num != 1:
@@ -42,7 +42,7 @@ def parse_csv():
 def get_new_tags(portal):
     # TODO do not parse every time
     today = date.today()
-    data_dict = parse_csv()
+    data_dict = parse_csv('example_data.csv')
     new_tags = []
     for name in data_dict:
         dates = data_dict[name]
@@ -54,7 +54,7 @@ def get_new_tags(portal):
 
 def get_popular_tags():
     # TODO do not parse every time
-    data_dict = parse_csv()
+    data_dict = parse_csv('example_data.csv')
     popular_tags = []
     for name in data_dict:
         appeared_in_portals = set()
@@ -71,7 +71,7 @@ def get_popular_tags():
 
 def plot_tags(tag_list):
     # TODO do not parse every time
-    data_dict = parse_csv()
+    data_dict = parse_csv('example_data.csv')
     dates = []
     for tag in tag_list:
         dates.extend(data_dict[tag].keys())

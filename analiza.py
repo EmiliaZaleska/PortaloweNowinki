@@ -17,6 +17,9 @@ sample = {
 
 
 def parse_csv():
+    """
+    Read CSV file and return dict with more useful data format
+    """
     data_dict = {}
     with open('example_data.csv') as csv_file:
         datareader = csv.reader(csv_file)
@@ -33,3 +36,20 @@ def parse_csv():
                     data_dict[name][current_date][portal] += 1
     return data_dict
 
+
+def get_new_tags(portal):
+    # TODO do not parse every time
+    today = date.today()
+    data_dict = parse_csv()
+    new_tags = []
+    for name in data_dict:
+        dates = data_dict[name]
+        dates_appeared = [date_ for date_ in dates if dates[date_].get(portal) > 0]
+        if dates_appeared == [today.isoformat()]:
+            new_tags.append(name)
+    return new_tags
+
+
+if __name__ == '__main__':
+    from pprint import pprint
+    pprint(get_new_tags('pudelek'))

@@ -1,12 +1,17 @@
 import urllib.request
 import datetime
+import csv
+import bs4
 from bs4 import BeautifulSoup
+
 
 
 def czytaj_plotki(link):
 
+    plik_csv = 'Tagi.csv'
     plotki = {}
-    tagi = []
+
+
 
     try:
         with urllib.request.urlopen(link) as stream:
@@ -14,11 +19,24 @@ def czytaj_plotki(link):
             tekst = html.decode("utf-8-sig")
             #print(tekst)
 
-            soup.find_all("div", class_="entry__header")
+            soup = BeautifulSoup(tekst, 'html.parser')
+            entryheaders = soup.find_all("div", class_="entry_header")
+            dates = soup.find_all("span", class_="time")
+            tags = soup.find_all("span", class_="inline-tags")
 
-            #tagi.append(key)
+            for eh in entryheaders:
+                for d in dates:
+                    if d in eh:
+                        for t in tags:
+                            if t in eh:
+                                plotki[t].append(d)
 
-            #return tagi
+            print (plotki)
+
+            #for d in dates:
+             #   print (d.text)
+            #for t in tags:
+             #   print (t.text)
 
     except urllib.request.HTTPError as err:
         print("Błąd HTTP")
@@ -32,6 +50,18 @@ def czytaj_plotki(link):
 
     finally:
         stream.close()
+
+    with open(plik_csv, 'w') as csvFile:
+        Writer = csv.writer(csvFile)
+
+        columnTitleRow = "date, tag\n"
+        Writer.writerow(columnTitleRow)
+
+        for key in plotki:
+            row = key + ',' + plotki[key]
+            csvFile.write(row + '\n')
+
+
 
 
 

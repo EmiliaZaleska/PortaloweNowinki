@@ -52,7 +52,7 @@ def get_new_tags(portal):
         dates_appeared = [date_ for date_ in dates.keys() if dates[date_].get(portal)]
         if dates_appeared == [today]:
             new_tags.append(name)
-    return new_tags
+    print(new_tags)
 
 
 def get_popular_tags():
@@ -72,7 +72,7 @@ def get_popular_tags():
                     appeared_in_portals.add(portal)
         if len(appeared_in_portals) >= 3:
             popular_tags.append(name)
-    return popular_tags
+    print(popular_tags)
 
 
 def get_first_appearance(tag):
@@ -84,7 +84,7 @@ def get_first_appearance(tag):
     data_dict = parse_csv('example_data.csv')
     dates = data_dict[tag]
     first_appeared_date = min(dates.keys())
-    return first_appeared_date, set(dates[first_appeared_date].keys())
+    print(first_appeared_date, set(dates[first_appeared_date].keys()))
 
 
 def plot_tags(tag_list):
@@ -122,4 +122,4 @@ if __name__ == '__main__':
     pprint(get_popular_tags())
     pprint(get_new_tags('pudelek'))
     pprint(get_first_appearance('Anna Lewandowska'))
-    plot_tags(['Dżoana Krupa', 'Anna Lewandowska', 'Robert Lewandowski'])
+    plot_tags(['Dzoana Krupa', 'Anna Lewandowska', 'Robert Lewandowski'])

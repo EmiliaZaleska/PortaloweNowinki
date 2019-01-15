@@ -1,5 +1,6 @@
 import tkinter as tk
 import sys
+from analiza import *
 # import czytanie_plotek
 # import czytanie_plotek2
 # Test lists/dictionaries below, to be replaced
@@ -30,6 +31,7 @@ def test_przekazania_zmiennej(arg):
     else:
         print("Nie znaleziono")
 
+
 # Creating main window
 main_window = tk.Tk()
 main_window.title("Portalowe Nowinki")
@@ -37,7 +39,7 @@ topFrame = tk.Frame(main_window)
 topFrame.grid()
 bottomFrame = tk.Frame(main_window)
 bottomFrame.grid()
-
+get_first_appearance("Anna Lewandowska")
 
 # Printing console output in UI
 def redirector(inputStr):
@@ -50,10 +52,10 @@ sys.stdout.write = redirector
 label_1 = tk.Label(topFrame, text="Informacje o nowościach")
 label_1.grid(row=0, columnspan=2)
 
-button_1 = tk.Button(topFrame, text="Nowe słowa", bg="black", fg="red", command=lambda: test_z_argumentem("Testowo"))
+button_1 = tk.Button(topFrame, text="Nowe słowa", bg="black", fg="red", command=lambda: get_new_tags("pudelek"))
 button_1.grid(row=1, columnspan=2)
 
-button_2 = tk.Button(topFrame, text="Słowa na innych portalach", bg="black", fg="red", command=test_lista2)
+button_2 = tk.Button(topFrame, text="Słowa na innych portalach", bg="black", fg="red", command=get_popular_tags)
 button_2.grid(row=2, columnspan=2)
 
 label_2 = tk.Label(topFrame, text="\nSzukaj wystąpień")
@@ -63,7 +65,7 @@ nazwisko = tk.StringVar()
 entry_1 = tk.Entry(topFrame, textvariable=nazwisko)
 entry_1.grid(row=4, column=0)
 
-button_3 = tk.Button(topFrame, text="Szukaj", bg="black", fg="red", command=lambda: test_przekazania_zmiennej(nazwisko.get()))
+button_3 = tk.Button(topFrame, text="Szukaj", bg="black", fg="red", command=lambda: get_first_appearance(nazwisko.get()))
 button_3.grid(row=4, column=1)
 
 # Bottom frame - label and textbox
